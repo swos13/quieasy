@@ -1,6 +1,6 @@
 import { Roboto } from "next/font/google";
 import { ThemeProvider } from "@mui/material";
-import "./globals.css";
+import "./globals.scss";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 import theme from "./theme";
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto.variable}`}>
+      <body className={`${roboto.className}`}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </AppRouterCacheProvider>

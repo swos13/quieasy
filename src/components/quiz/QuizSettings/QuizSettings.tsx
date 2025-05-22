@@ -3,68 +3,130 @@
 import { useState } from "react";
 import { createSearchParams } from "../../../tools/helpers";
 import { Difficulty, QuestionType } from "@/app/lib/types";
-import style from "./QuizSettings.module.css";
+import styles from "./QuizSettings.module.scss";
 import { Button, InputLabel, MenuItem, Select } from "@mui/material";
-import {amounts, categories, difficulties, questionTypes} from "./optionsValues";
+import { amounts, categories, difficulties, questionTypes } from "./optionsValues";
 
-interface SearchProps {
-    amount: number,
-    category: number,
-    difficulty: Difficulty | "",
-    type: QuestionType | "",
+interface SettingsOptions {
+  amount: number;
+  category: number;
+  difficulty: Difficulty | "";
+  type: QuestionType | "";
 }
 
-const defaultSearchProps: SearchProps = {
-    amount: 10,
-    category: 0,
-    difficulty: "",
-    type: ""
-}
+const defaultSettingsOptions: SettingsOptions = {
+  amount: 10,
+  category: 0,
+  difficulty: "",
+  type: "",
+};
 
+const menuProps = {
+  PaperProps: {
+    className: styles.menu_paper,
+  },
+  MenuListProps: {
+    className: styles.menu_list, // optional if you want to style the list itself
+  },
+};
 
 export default function QuizSettings() {
-  const [searchProps, setSearchProps] = useState<SearchProps>(defaultSearchProps)
+  const [settingsOptions, setSettingsOptions] = useState<SettingsOptions>(defaultSettingsOptions);
   //const [filters, setFilters] =
 
   const handleSubmit = () => {
-    const searchQueryParams = createSearchParams(searchProps.amount, searchProps.category, searchProps.difficulty, searchProps.type);
+    const searchQueryParams = createSearchParams(settingsOptions.amount, settingsOptions.category, settingsOptions.difficulty, settingsOptions.type);
     console.log(searchQueryParams);
   };
 
-  const handleUpdate = <K extends keyof SearchProps>(name: K, value: SearchProps[K]) => {
-    setSearchProps(prev => {
-        const newSearchProps: SearchProps = {...prev};
-        newSearchProps[name] = value;
-        return newSearchProps;
-    })
-  }
+  const handleUpdate = <K extends keyof SettingsOptions>(name: K, value: SettingsOptions[K]) => {
+    setSettingsOptions((prev) => {
+      const newSettingsOptions: SettingsOptions = { ...prev };
+      newSettingsOptions[name] = value;
+      return newSettingsOptions;
+    });
+  };
   return (
-    <div className={style.container}>
-      <div className={style.option}>
-        <InputLabel className={style.option_label} id="amount-select-label">Number of questions:</InputLabel>
-        <Select labelId="amount-select-label" value={searchProps.amount} onChange={(event) => handleUpdate("amount", event.target.value)}>
-            {amounts.map((amount) => <MenuItem value={amount} key={amount}>{amount}</MenuItem>)}
+    <div className={styles.container}>
+      <div className={styles.option}>
+        <InputLabel className={styles.option_label} id="amount-select-label">
+          Number of questions:
+        </InputLabel>
+        <Select
+          className={styles.option_select}
+          variant="outlined"
+          labelId="amount-select-label"
+          value={settingsOptions.amount}
+          onChange={(event) => handleUpdate("amount", event.target.value)}
+          MenuProps={menuProps}
+          inputProps={{ className: styles.select_input }}>
+          {amounts.map((amount) => (
+            <MenuItem value={amount} key={amount}>
+              {amount}
+            </MenuItem>
+          ))}
         </Select>
       </div>
-      <div className={style.option}>
-        <InputLabel className={style.option_label} id="category-select-label">Category of questions:</InputLabel>
-        <Select labelId="category-select-label" value={searchProps.category} onChange={(event) => handleUpdate("category", event.target.value)}>
-            {categories.map((category) => <MenuItem value={category.value} key={category.value}>{category.name}</MenuItem>)}
+      <div className={styles.option}>
+        <InputLabel className={styles.option_label} id="category-select-label">
+          Category of questions:
+        </InputLabel>
+        <Select
+          className={styles.option_select}
+          variant="outlined"
+          labelId="category-select-label"
+          value={settingsOptions.category}
+          onChange={(event) => handleUpdate("category", event.target.value)}
+          MenuProps={menuProps}
+          inputProps={{ className: styles.select_input }}>
+          {categories.map((category) => (
+            <MenuItem value={category.value} key={category.value}>
+              {category.name}
+            </MenuItem>
+          ))}
         </Select>
       </div>
-      <div className={style.option}>
-        <InputLabel className={style.option_label} id="type-select-label">Type:</InputLabel>
-        <Select labelId="type-select-label" value={searchProps.type} onChange={(event) => handleUpdate("type", event.target.value)}>
-            {questionTypes.map((type, index) => <MenuItem value={type.value} key={index}>{type.name}</MenuItem>)}
+      <div className={styles.option}>
+        <InputLabel className={styles.option_label} id="type-select-label">
+          Type:
+        </InputLabel>
+        <Select
+          className={styles.option_select}
+          variant="outlined"
+          labelId="type-select-label"
+          value={settingsOptions.type}
+          onChange={(event) => handleUpdate("type", event.target.value)}
+          MenuProps={menuProps}
+          inputProps={{ className: styles.select_input }}
+          displayEmpty>
+          {questionTypes.map((type, index) => (
+            <MenuItem value={type.value} key={index}>
+              {type.name}
+            </MenuItem>
+          ))}
         </Select>
       </div>
-      <div className={style.option}>
-        <InputLabel className={style.option_label} id="difficulty-select-label">Difficulty:</InputLabel>
-        <Select labelId="difficulty-select-label" value={searchProps.difficulty} onChange={(event) => handleUpdate("difficulty", event.target.value)}>
-            {difficulties.map((difficulty, index) => <MenuItem value={difficulty.value} key={index}>{difficulty.name}</MenuItem>)}
+      <div className={styles.option}>
+        <InputLabel className={styles.option_label} id="difficulty-select-label">
+          Difficulty:
+        </InputLabel>
+        <Select
+          className={styles.option_select}
+          variant="outlined"
+          labelId="difficulty-select-label"
+          value={settingsOptions.difficulty}
+          onChange={(event) => handleUpdate("difficulty", event.target.value)}
+          MenuProps={menuProps}
+          inputProps={{ className: styles.select_input }}
+          displayEmpty>
+          {difficulties.map((difficulty, index) => (
+            <MenuItem value={difficulty.value} key={index}>
+              {difficulty.name}
+            </MenuItem>
+          ))}
         </Select>
       </div>
-      <Button onClick={handleSubmit}>Submit</Button>
+      <Button className={styles.button} variant="contained" onClick={handleSubmit}>Start</Button>
     </div>
   );
 }
