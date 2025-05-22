@@ -32,9 +32,8 @@ const menuProps = {
 
 export default function QuizSettings() {
   const [settingsOptions, setSettingsOptions] = useState<SettingsOptions>(defaultSettingsOptions);
-  //const [filters, setFilters] =
 
-  const handleSubmit = () => {
+  const handleStart = () => {
     const searchQueryParams = createSearchParams(settingsOptions.amount, settingsOptions.category, settingsOptions.difficulty, settingsOptions.type);
     console.log(searchQueryParams);
   };
@@ -126,7 +125,7 @@ export default function QuizSettings() {
           ))}
         </Select>
       </div>
-      <Button className={styles.button} variant="contained" onClick={handleSubmit}>Start</Button>
+      <Button className={styles.button} variant="contained" onClick={handleStart}>Start</Button>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export function createSearchParams(amount: number = 10, category?: number, diffi
   if (difficulty) params.append("difficulty", difficulty);
   if (type) params.append("type", type);
 
-  return createSearchParams.toString();
+  return params.toString();
 }
 
 export async function getQuestions(searchQuery: string) {
