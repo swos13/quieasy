@@ -1,0 +1,47 @@
+
+
+:root {
+  --color-background: #0B0D17;       /* Dark Background */
+  --color-surface: #11131F;          /* Dark Surface */
+  --color-text-primary: #A0A4B8;     /* Dark Primary Text */
+  --color-text-secondary: #7C819C;   /* Dark Secondary Text */
+  --color-accent: #5C6BC0;           /* Dark Accent */
+  --color-border: #1C1F2B;           /* Dark Border */
+  --color-hover: #3E4C5E;            /* Dark Hover */
+  --color-success: #4C6B5C;          /* Dark Success */
+  --color-warning: #A68A4C;          /* Dark Warning */
+  --color-error: #A65C6B;            /* Dark Error */
+  --color-accent: #5C6BC0;           /* Dark Accent */
+  --color-hover: #3E4C5E;            /* Dark Hover */  
+  --color-select-menu: #151827;      /* Dark Select Menu */  
+
+}
+
+[data-theme="light"] {
+  --color-background: #F5F7FA;       /* Light Background */
+  --color-surface: #FFFFFF;          /* Light Surface */
+  --color-text-primary: #2E3440;     /* Light Primary Text */
+  --color-text-secondary: #4C566A;   /* Light Secondary Text */
+  --color-accent: #5C6BC0;           /* Light Accent */
+  --color-border: #D8DEE9;           /* Light Border */
+  --color-hover: #E5E9F0;            /* Light Hover */
+  --color-success: #A3BE8C;          /* Light Success */
+  --color-warning: #EBCB8B;          /* Light Warning */
+  --color-error: #BF616A;            /* Light Error */
+  --color-accent: #5C6BC0;           /* Light Accent */
+  --color-hover: #3E4C5E;            /* Light Hover */
+  --color-select-menu: #EDEFF5;        /* Light Select Menu */  
+}
+
+/* Map CSS Variables to SCSS Variables */
+$color-background: var(--color-background);
+$color-surface: var(--color-surface);
+$color-text-primary: var(--color-text-primary);
+$color-text-secondary: var(--color-text-secondary);
+$color-accent: var(--color-accent);
+$color-border: var(--color-border);
+$color-hover: var(--color-hover);
+$color-success: var(--color-success);
+$color-warning: var(--color-warning);
+$color-error: var(--color-error);
+
