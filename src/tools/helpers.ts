@@ -1,4 +1,4 @@
-import { Difficulty, QuestionType } from "@/app/lib/types";
+import { Difficulty, QuestionType } from "@/lib/types";
 import { fetchData } from "./api";
 
 export function createSearchParams(amount: number = 10, category?: number, difficulty?: Difficulty | "", type?: QuestionType | "") {
@@ -12,6 +12,7 @@ export function createSearchParams(amount: number = 10, category?: number, diffi
 }
 
 export async function getQuestions(searchQuery: string) {
+  console.log(searchQuery)
   const data = await fetchData(searchQuery);
   const questions = data.results;
   return questions;

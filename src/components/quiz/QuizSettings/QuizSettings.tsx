@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { createSearchParams } from "../../../tools/helpers";
-import { Difficulty, QuestionType } from "@/app/lib/types";
+import { Difficulty, QuestionType } from "@/lib/types";
 import styles from "./QuizSettings.module.scss";
 import { Button, InputLabel, MenuItem, Select } from "@mui/material";
 import { amounts, categories, difficulties, questionTypes } from "./optionsValues";
+import { useRouter } from "next/navigation";
+import useToken from "@/tools/hooks/useToken";
 
 interface SettingsOptions {
   amount: number;
@@ -32,10 +34,12 @@ const menuProps = {
 
 export default function QuizSettings() {
   const [settingsOptions, setSettingsOptions] = useState<SettingsOptions>(defaultSettingsOptions);
+  const router = useRouter();
+  const { token, isLoading } = useToken();
 
-  const handleStart = () => {
+  const handleStart = async () => {
     const searchQueryParams = createSearchParams(settingsOptions.amount, settingsOptions.category, settingsOptions.difficulty, settingsOptions.type);
-    console.log(searchQueryParams);
+    router.push(`./quiz?${searchQueryParams}${token ? "&token=" + token : ""}`);
   };
 
   const handleUpdate = <K extends keyof SettingsOptions>(name: K, value: SettingsOptions[K]) => {
@@ -125,7 +129,9 @@ export default function QuizSettings() {
           ))}
         </Select>
       </div>
-      <Button className={styles.button} variant="contained" onClick={handleStart}>Start</Button>
+      <Button className={styles.button} variant="contained" onClick={handleStart} disabled={isLoading}>
+        {isLoading ? "Starting..." : "Start"}
+      </Button>
     </div>
   );
 }
