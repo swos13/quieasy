@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createSearchParams } from "../../../tools/helpers";
 import { Difficulty, QuestionType } from "@/lib/types";
 import styles from "./QuizSettings.module.scss";
-import { Button, InputLabel, MenuItem, Select } from "@mui/material";
+import { Button, InputLabel, MenuItem, Select, CircularProgress } from "@mui/material";
 import { amounts, categories, difficulties, questionTypes } from "./optionsValues";
 import { useRouter } from "next/navigation";
 import useToken from "@/tools/hooks/useToken";
@@ -35,9 +35,11 @@ const menuProps = {
 export default function QuizSettings() {
   const [settingsOptions, setSettingsOptions] = useState<SettingsOptions>(defaultSettingsOptions);
   const router = useRouter();
-  const { token, isLoading } = useToken();
+  const { token, isLoading: isTokenLoading } = useToken();
+  const [isStarting, setIsStarting] = useState<boolean>();
 
-  const handleStart = async () => {
+  const handleStart = () => {
+    setIsStarting(true);
     const searchQueryParams = createSearchParams(settingsOptions.amount, settingsOptions.category, settingsOptions.difficulty, settingsOptions.type);
     router.push(`./quiz?${searchQueryParams}${token ? "&token=" + token : ""}`);
   };
@@ -129,8 +131,19 @@ export default function QuizSettings() {
           ))}
         </Select>
       </div>
-      <Button className={styles.button} variant="contained" onClick={handleStart} disabled={isLoading}>
-        {isLoading ? "Starting..." : "Start"}
+      <Button
+        className={styles.button}
+        variant="contained"
+        onClick={() => {
+          if (!isTokenLoading && !isStarting) handleStart();
+        }}>
+        {isTokenLoading || isStarting ? (
+          <div className={styles.loader_box}>
+            <CircularProgress size={32} color="inherit"/>
+          </div>
+        ) : (
+          "Start"
+        )}
       </Button>
     </div>
   );
