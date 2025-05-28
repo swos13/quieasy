@@ -1,4 +1,4 @@
-// import QuestionsWrapper from "@/components/QuestionsWrapper/QuestionsWrapper";
+import QuestionsWrapper from "@/components/QuestionsWrapper/QuestionsWrapper";
 import { getQuestions } from "@/tools/api";
 
 interface QuizProps {
@@ -10,10 +10,7 @@ export default async function Quiz({ searchParams }: QuizProps) {
   const params = new URLSearchParams(data).toString();
   const questions = await getQuestions(params.toString());
 
-  console.log(questions);
-
   return (
-    // <QuestionsWrapper questions={questions} />
-    <div>Questions</div>
+    <QuestionsWrapper questions={questions} />
   );
 }

@@ -5,7 +5,7 @@ import { createSearchParams } from "../../tools/helpers";
 import { Difficulty, QuestionType } from "@/lib/types";
 import styles from "./QuizSettings.module.scss";
 import { Button, InputLabel, MenuItem, Select, CircularProgress, Chip } from "@mui/material";
-import { limits, categories, difficulties, questionTypes } from "./optionsValues";
+import { limits, categories, difficulties, questionTypes } from "../../lib/data/optionsValues";
 import { useRouter } from "next/navigation";
 
 interface SettingsOptions {
@@ -39,37 +39,51 @@ export default function QuizSettings() {
   const handleStart = () => {
     setIsStarting(true);
     const searchQueryParams = createSearchParams(settingsOptions.limit, settingsOptions.categories, settingsOptions.difficulties, settingsOptions.types);
-    router.push(`./questions?${searchQueryParams}`);
+    console.log(searchQueryParams);
+    router.push(`./quiz?${searchQueryParams}`);
   };
 
   const toggleCategory = (selectedCategory: string) => {
-    setSettingsOptions((prev) => {
-      const categories = prev.categories;
-      const newCategories = categories.includes(selectedCategory)
-        ? categories.filter((category) => category !== selectedCategory)
-        : [...categories, selectedCategory];
-      return { ...prev, categories: newCategories };
-    });
+    if (selectedCategory === settingsOptions.categories[0] && settingsOptions.categories.length === 1) return;
+
+    if (selectedCategory === "") setSettingsOptions((prev) => ({ ...prev, categories: [""] }));
+    else {
+      setSettingsOptions((prev) => {
+        const categories = prev.categories;
+        const newCategories = categories.includes(selectedCategory)
+          ? categories.filter((category) => category !== selectedCategory && category !== "")
+          : [...categories.filter((category) => category !== ""), selectedCategory];
+        return { ...prev, categories: newCategories };
+      });
+    }
   };
 
   const toggleType = (selectedType: QuestionType) => {
-    setSettingsOptions((prev) => {
-      const types = prev.types;
-      const newTypes = types.includes(selectedType)
-        ? types.filter((category) => category !== selectedType)
-        : [...types, selectedType];
-      return { ...prev, types: newTypes };
-    });
+    if (selectedType === settingsOptions.types[0] && settingsOptions.types.length === 1) return;
+
+    if (selectedType === "") setSettingsOptions((prev) => ({ ...prev, types: [""] }));
+    else {
+      setSettingsOptions((prev) => {
+        const types = prev.types;
+        const newTypes = types.includes(selectedType) ? types.filter((type) => type !== selectedType) : [...types.filter((type) => type !== ""), selectedType];
+        return { ...prev, types: newTypes };
+      });
+    }
   };
 
   const toggleDifficulty = (selectedDifficulty: Difficulty) => {
-    setSettingsOptions((prev) => {
-      const difficulties = prev.difficulties;
-      const newDifficulties = difficulties.includes(selectedDifficulty)
-        ? difficulties.filter((category) => category !== selectedDifficulty)
-        : [...difficulties, selectedDifficulty];
-      return { ...prev, difficulties: newDifficulties };
-    });
+    if (selectedDifficulty === settingsOptions.difficulties[0] && settingsOptions.difficulties.length === 1) return;
+
+    if (selectedDifficulty === "") setSettingsOptions((prev) => ({ ...prev, difficulties: [""] }));
+    else {
+      setSettingsOptions((prev) => {
+        const difficulties = prev.difficulties;
+        const newDifficulties = difficulties.includes(selectedDifficulty)
+          ? difficulties.filter((difficulty) => difficulty !== selectedDifficulty)
+          : [...difficulties.filter((difficulty) => difficulty !== ""), selectedDifficulty];
+        return { ...prev, difficulties: newDifficulties };
+      });
+    }
   };
 
   const handleUpdate = <K extends keyof SettingsOptions>(name: K, value: SettingsOptions[K]) => {
@@ -118,9 +132,9 @@ export default function QuizSettings() {
         </div>
       </div>
       <div className={styles.option}>
-         <InputLabel className={styles.option_label} id="type-select-label">
-           Types:
-         </InputLabel>
+        <InputLabel className={styles.option_label} id="type-select-label">
+          Types:
+        </InputLabel>
         <div className={styles.chips_wrapper}>
           {questionTypes.map((type) => (
             <Chip
@@ -133,11 +147,11 @@ export default function QuizSettings() {
             />
           ))}
         </div>
-       </div>
-       <div className={styles.option}>
-         <InputLabel className={styles.option_label} id="difficulty-select-label">
-           Difficulty:
-         </InputLabel>
+      </div>
+      <div className={styles.option}>
+        <InputLabel className={styles.option_label} id="difficulty-select-label">
+          Difficulty:
+        </InputLabel>
         <div className={styles.chips_wrapper}>
           {difficulties.map((difficulty) => (
             <Chip
@@ -150,7 +164,7 @@ export default function QuizSettings() {
             />
           ))}
         </div>
-       </div>
+      </div>
       <Button
         className={styles.button}
         variant="contained"

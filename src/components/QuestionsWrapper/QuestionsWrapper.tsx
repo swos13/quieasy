@@ -1,3 +1,5 @@
+'use client';
+
 import { Question as IQuestion } from "@/lib/types";
 import { useState } from "react";
 import Question from "../Question/Question";

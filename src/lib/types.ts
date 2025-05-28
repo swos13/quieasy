@@ -1,27 +1,27 @@
 export type Question = {
-    category: string,
-    text: string,
-    correctAnswer: string,
-    incorrectAnswers: string[]
-}
+  category: string;
+  text: string;
+  correctAnswer: string;
+  incorrectAnswers: string[];
+};
 
-export type QuestionType = '' | 'text_choice' | 'image_choice';
+export type QuestionType = "" | "text_choice" | "image_choice";
 
-export type Difficulty = '' | 'easy' | 'medium' | 'hard';
-
+export type Difficulty = "" | "easy" | "medium" | "hard";
 
 export interface QuestionFilters {
-    limit: number,
-    categories?: number,
-    type?: QuestionType,
-    difficulty: Difficulty
+  limit: number;
+  categories?: number;
+  type?: QuestionType;
+  difficulty: Difficulty;
 }
 
 export interface QuestionData {
-    type: string,
-    difficulty: string,
-    category: string,
-    question: string,
-    correct_answer: string,
-    incorrect_answers: string[]
+  type: string;
+  difficulty: string;
+  category: string;
+  question: { text: string };
+  correctAnswer: string;
+  incorrectAnswers: string[];
+  tags: string[];
 }
