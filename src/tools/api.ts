@@ -1,3 +1,6 @@
+import { QuestionData } from "@/lib/types";
+import { extractQuestion } from "./helpers";
+
 export const fetchData = async (paramsString: string = "amount=10") => {
   try {
     console.log(paramsString);
@@ -24,5 +27,12 @@ export const getToken = async () => {
 
   const data = await response.json();
 
-  return data.token; 
+  return data.token;
 };
+
+export async function getQuestions(searchQuery: string) {
+  const data = await fetchData(searchQuery);
+  const questions = data.results;
+
+  return questions.map((question: QuestionData) => extractQuestion(question));;
+}

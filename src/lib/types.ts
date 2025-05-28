@@ -4,10 +4,10 @@ export type Category = {
 }
 
 export type Question = {
-    type: QuestionType
     category: string,
     text: string,
-    answers: Array<string>,
+    correctAnswer: string,
+    incorrectAnswers: string[]
 }
 
 export type QuestionType = 'multiple' | 'boolean';
@@ -20,4 +20,13 @@ export interface QuestionFilters {
     category?: number,
     type?: QuestionType,
     difficulty: Difficulty
+}
+
+export interface QuestionData {
+    type: string,
+    difficulty: string,
+    category: string,
+    question: string,
+    correct_answer: string,
+    incorrect_answers: string[]
 }

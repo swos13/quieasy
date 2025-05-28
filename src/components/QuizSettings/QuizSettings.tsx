@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createSearchParams } from "../../../tools/helpers";
+import { createSearchParams } from "../../tools/helpers";
 import { Difficulty, QuestionType } from "@/lib/types";
 import styles from "./QuizSettings.module.scss";
 import { Button, InputLabel, MenuItem, Select, CircularProgress } from "@mui/material";

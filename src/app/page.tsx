@@ -1,4 +1,4 @@
-import QuizSettings from "@/components/quiz/QuizSettings/QuizSettings";
+import QuizSettings from "@/components/QuizSettings/QuizSettings";
 import styles from "./page.module.scss";
 
 export default function Home() {

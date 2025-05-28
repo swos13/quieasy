@@ -1,5 +1,4 @@
-import { Difficulty, QuestionType } from "@/lib/types";
-import { fetchData } from "./api";
+import { Difficulty, Question, QuestionData, QuestionType } from "@/lib/types";
 
 export function createSearchParams(amount: number = 10, category?: number, difficulty?: Difficulty | "", type?: QuestionType | "") {
   const params = new URLSearchParams();
@@ -11,9 +10,15 @@ export function createSearchParams(amount: number = 10, category?: number, diffi
   return params.toString();
 }
 
-export async function getQuestions(searchQuery: string) {
-  console.log(searchQuery)
-  const data = await fetchData(searchQuery);
-  const questions = data.results;
-  return questions;
+export function extractQuestion(questionDataObject: QuestionData): Question {
+  return {
+    text: cleanText(questionDataObject.question),
+    category: questionDataObject.category,
+    correctAnswer: questionDataObject.correct_answer,
+    incorrectAnswers: questionDataObject.incorrect_answers,
+  };
+}
+
+export function cleanText(text: string){
+  return text.replaceAll("&#039;", "'").replaceAll("&quot;", '"');
 }
