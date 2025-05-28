@@ -4,23 +4,22 @@ import { useState } from "react";
 import { createSearchParams } from "../../tools/helpers";
 import { Difficulty, QuestionType } from "@/lib/types";
 import styles from "./QuizSettings.module.scss";
-import { Button, InputLabel, MenuItem, Select, CircularProgress } from "@mui/material";
-import { amounts, categories, difficulties, questionTypes } from "./optionsValues";
+import { Button, InputLabel, MenuItem, Select, CircularProgress, Chip } from "@mui/material";
+import { limits, categories, difficulties, questionTypes } from "./optionsValues";
 import { useRouter } from "next/navigation";
-import useToken from "@/tools/hooks/useToken";
 
 interface SettingsOptions {
-  amount: number;
-  category: number;
-  difficulty: Difficulty | "";
-  type: QuestionType | "";
+  limit: number;
+  categories: string[];
+  difficulties: Difficulty[];
+  types: QuestionType[];
 }
 
 const defaultSettingsOptions: SettingsOptions = {
-  amount: 10,
-  category: 0,
-  difficulty: "",
-  type: "",
+  limit: 10,
+  categories: [""],
+  difficulties: [""],
+  types: [""],
 };
 
 const menuProps = {
@@ -35,13 +34,42 @@ const menuProps = {
 export default function QuizSettings() {
   const [settingsOptions, setSettingsOptions] = useState<SettingsOptions>(defaultSettingsOptions);
   const router = useRouter();
-  const { token, isLoading: isTokenLoading } = useToken();
   const [isStarting, setIsStarting] = useState<boolean>();
 
   const handleStart = () => {
     setIsStarting(true);
-    const searchQueryParams = createSearchParams(settingsOptions.amount, settingsOptions.category, settingsOptions.difficulty, settingsOptions.type);
-    router.push(`./quiz?${searchQueryParams}${token ? "&token=" + token : ""}`);
+    const searchQueryParams = createSearchParams(settingsOptions.limit, settingsOptions.categories, settingsOptions.difficulties, settingsOptions.types);
+    router.push(`./questions?${searchQueryParams}`);
+  };
+
+  const toggleCategory = (selectedCategory: string) => {
+    setSettingsOptions((prev) => {
+      const categories = prev.categories;
+      const newCategories = categories.includes(selectedCategory)
+        ? categories.filter((category) => category !== selectedCategory)
+        : [...categories, selectedCategory];
+      return { ...prev, categories: newCategories };
+    });
+  };
+
+  const toggleType = (selectedType: QuestionType) => {
+    setSettingsOptions((prev) => {
+      const types = prev.types;
+      const newTypes = types.includes(selectedType)
+        ? types.filter((category) => category !== selectedType)
+        : [...types, selectedType];
+      return { ...prev, types: newTypes };
+    });
+  };
+
+  const toggleDifficulty = (selectedDifficulty: Difficulty) => {
+    setSettingsOptions((prev) => {
+      const difficulties = prev.difficulties;
+      const newDifficulties = difficulties.includes(selectedDifficulty)
+        ? difficulties.filter((category) => category !== selectedDifficulty)
+        : [...difficulties, selectedDifficulty];
+      return { ...prev, difficulties: newDifficulties };
+    });
   };
 
   const handleUpdate = <K extends keyof SettingsOptions>(name: K, value: SettingsOptions[K]) => {
@@ -54,92 +82,84 @@ export default function QuizSettings() {
   return (
     <div className={styles.container}>
       <div className={styles.option}>
-        <InputLabel className={styles.option_label} id="amount-select-label">
+        <InputLabel className={styles.option_label} id="limit-select-label">
           Number of questions:
         </InputLabel>
         <Select
           className={styles.option_select}
           variant="outlined"
-          labelId="amount-select-label"
-          value={settingsOptions.amount}
-          onChange={(event) => handleUpdate("amount", event.target.value)}
+          labelId="limit-select-label"
+          value={settingsOptions.limit}
+          onChange={(event) => handleUpdate("limit", event.target.value)}
           MenuProps={menuProps}
           inputProps={{ className: styles.select_input }}>
-          {amounts.map((amount) => (
-            <MenuItem value={amount} key={amount}>
-              {amount}
+          {limits.map((limit) => (
+            <MenuItem value={limit} key={limit}>
+              {limit}
             </MenuItem>
           ))}
         </Select>
       </div>
       <div className={styles.option}>
         <InputLabel className={styles.option_label} id="category-select-label">
-          Category of questions:
+          Categories of questions:
         </InputLabel>
-        <Select
-          className={styles.option_select}
-          variant="outlined"
-          labelId="category-select-label"
-          value={settingsOptions.category}
-          onChange={(event) => handleUpdate("category", event.target.value)}
-          MenuProps={menuProps}
-          inputProps={{ className: styles.select_input }}>
+        <div className={styles.chips_wrapper}>
           {categories.map((category) => (
-            <MenuItem value={category.value} key={category.value}>
-              {category.name}
-            </MenuItem>
+            <Chip
+              className={styles.chip}
+              key={category.value}
+              label={category.name}
+              color="info"
+              variant={settingsOptions.categories.includes(category.value) ? "filled" : "outlined"}
+              onClick={() => toggleCategory(category.value)}
+            />
           ))}
-        </Select>
+        </div>
       </div>
       <div className={styles.option}>
-        <InputLabel className={styles.option_label} id="type-select-label">
-          Type:
-        </InputLabel>
-        <Select
-          className={styles.option_select}
-          variant="outlined"
-          labelId="type-select-label"
-          value={settingsOptions.type}
-          onChange={(event) => handleUpdate("type", event.target.value)}
-          MenuProps={menuProps}
-          inputProps={{ className: styles.select_input }}
-          displayEmpty>
-          {questionTypes.map((type, index) => (
-            <MenuItem value={type.value} key={index}>
-              {type.name}
-            </MenuItem>
+         <InputLabel className={styles.option_label} id="type-select-label">
+           Types:
+         </InputLabel>
+        <div className={styles.chips_wrapper}>
+          {questionTypes.map((type) => (
+            <Chip
+              className={styles.chip}
+              key={type.value}
+              label={type.name}
+              color="info"
+              variant={settingsOptions.types.includes(type.value) ? "filled" : "outlined"}
+              onClick={() => toggleType(type.value)}
+            />
           ))}
-        </Select>
-      </div>
-      <div className={styles.option}>
-        <InputLabel className={styles.option_label} id="difficulty-select-label">
-          Difficulty:
-        </InputLabel>
-        <Select
-          className={styles.option_select}
-          variant="outlined"
-          labelId="difficulty-select-label"
-          value={settingsOptions.difficulty}
-          onChange={(event) => handleUpdate("difficulty", event.target.value)}
-          MenuProps={menuProps}
-          inputProps={{ className: styles.select_input }}
-          displayEmpty>
-          {difficulties.map((difficulty, index) => (
-            <MenuItem value={difficulty.value} key={index}>
-              {difficulty.name}
-            </MenuItem>
+        </div>
+       </div>
+       <div className={styles.option}>
+         <InputLabel className={styles.option_label} id="difficulty-select-label">
+           Difficulty:
+         </InputLabel>
+        <div className={styles.chips_wrapper}>
+          {difficulties.map((difficulty) => (
+            <Chip
+              className={styles.chip}
+              key={difficulty.value}
+              label={difficulty.name}
+              color="info"
+              variant={settingsOptions.difficulties.includes(difficulty.value) ? "filled" : "outlined"}
+              onClick={() => toggleDifficulty(difficulty.value)}
+            />
           ))}
-        </Select>
-      </div>
+        </div>
+       </div>
       <Button
         className={styles.button}
         variant="contained"
         onClick={() => {
-          if (!isTokenLoading && !isStarting) handleStart();
+          if (!isStarting) handleStart();
         }}>
-        {isTokenLoading || isStarting ? (
+        {isStarting ? (
           <div className={styles.loader_box}>
-            <CircularProgress size={32} color="inherit"/>
+            <CircularProgress size={32} color="inherit" />
           </div>
         ) : (
           "Start"

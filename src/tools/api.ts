@@ -1,10 +1,12 @@
 import { QuestionData } from "@/lib/types";
 import { extractQuestion } from "./helpers";
 
-export const fetchData = async (paramsString: string = "amount=10") => {
+export const fetchData = async (paramsString: string = "limit=10") => {
   try {
     console.log(paramsString);
-    const response = await fetch(`https://opentdb.com/api.php?${paramsString}`);
+    const response = await fetch(`${process.env.API_URL} ${paramsString}`);
+
+    console.log("URL:", process.env.API_URL + paramsString)
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);

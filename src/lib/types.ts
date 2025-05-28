@@ -1,8 +1,3 @@
-export type Category = {
-    name: string,
-    id: number
-}
-
 export type Question = {
     category: string,
     text: string,
@@ -10,14 +5,14 @@ export type Question = {
     incorrectAnswers: string[]
 }
 
-export type QuestionType = 'multiple' | 'boolean';
+export type QuestionType = '' | 'text_choice' | 'image_choice';
 
-export type Difficulty = 'easy' | 'medium' | 'hard';
+export type Difficulty = '' | 'easy' | 'medium' | 'hard';
 
 
 export interface QuestionFilters {
-    amount: number,
-    category?: number,
+    limit: number,
+    categories?: number,
     type?: QuestionType,
     difficulty: Difficulty
 }

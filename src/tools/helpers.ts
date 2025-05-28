@@ -1,11 +1,11 @@
 import { Difficulty, Question, QuestionData, QuestionType } from "@/lib/types";
 
-export function createSearchParams(amount: number = 10, category?: number, difficulty?: Difficulty | "", type?: QuestionType | "") {
+export function createSearchParams(limit: number = 10, categories?: string[], difficulties?: Difficulty[], types?: QuestionType[]) {
   const params = new URLSearchParams();
-  params.append("amount", amount.toString());
-  if (category) params.append("category", category.toString());
-  if (difficulty) params.append("difficulty", difficulty);
-  if (type) params.append("type", type);
+  params.append("limit", limit.toString());
+  if (categories && categories.length > 0) params.append("categories", categories.toString());
+  if (difficulties && difficulties.length > 0) params.append("difficulties", difficulties.toString());
+  if (types && types.length > 0) params.append("type", types.toString());
 
   return params.toString();
 }
