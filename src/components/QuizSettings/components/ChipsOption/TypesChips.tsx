@@ -16,7 +16,7 @@ const TypesChips = () => {
 
   return (
     <div className={styles.option}>
-      <InputLabel>Types:</InputLabel>
+      <InputLabel className={styles.option_label}>Types of questions:</InputLabel>
       <Chips options={typesOptions} selectedOptions={types} toggleOption={(value) => toggleType(value as QuestionType)}/>
     </div>
   );

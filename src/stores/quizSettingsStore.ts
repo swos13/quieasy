@@ -17,7 +17,7 @@ interface Action {
 
 function updateSettingsArray<T>(previousArray: T[], newValue: T) {
   if (newValue === "") return ["" as T];
-  const newArray = previousArray.includes(newValue) ? [...previousArray, newValue] : previousArray[0] === "" ? [newValue] : [...previousArray, newValue];
+  const newArray = previousArray.includes(newValue) ? previousArray.filter(value => value !== newValue) : previousArray[0] === "" ? [newValue] : [...previousArray, newValue];
   return newArray;
 }
 

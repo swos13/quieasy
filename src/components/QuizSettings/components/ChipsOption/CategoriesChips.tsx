@@ -15,7 +15,7 @@ const CategoriesChips = () => {
 
   return (
     <div className={styles.option}>
-      <InputLabel>Categories:</InputLabel>
+      <InputLabel className={styles.option_label}>Categories of questions:</InputLabel>
       <Chips options={categoriesOptions} selectedOptions={categories} toggleOption={toggleCategory}/>
     </div>
   );

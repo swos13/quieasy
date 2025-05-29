@@ -1,0 +1,22 @@
+.option {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 320px;
+    width: 30%;
+
+    .option_label {
+      width: 100%;
+      text-align: center;
+      padding-left: 4px;
+      font-size: 16px;
+      color: var(--color-text-primary);
+    }
+
+    .chips_wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+}

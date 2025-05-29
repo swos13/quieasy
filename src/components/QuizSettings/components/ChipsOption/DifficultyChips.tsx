@@ -16,7 +16,7 @@ const DifficultyChips = () => {
 
   return (
     <div className={styles.option}>
-      <InputLabel>Difficulties:</InputLabel>
+      <InputLabel className={styles.option_label}>Difficulty of questions:</InputLabel>
       <Chips options={difficultiesOptions} selectedOptions={difficulties} toggleOption={(value) => toggleDifficulty(value as Difficulty)}/>
     </div>
   );
