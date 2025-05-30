@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createSearchParams } from "../../tools/helpers";
+import { createSearchParams, generateQuizUUID } from "../../tools/helpers";
 import styles from "./QuizSettings.module.scss";
 import { Button, CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,8 @@ export default function QuizSettings() {
     const { limit, categories, difficulties, types } = useQuizSettingsStore.getState();
     const searchQueryParams = createSearchParams(limit, categories, difficulties, types);
     console.log(searchQueryParams);
-    router.push(`./quiz?${searchQueryParams}`);
+    const quizId = generateQuizUUID();
+    router.push(`./quiz?${searchQueryParams}&quizId=${quizId}&isNew=true`);
   };
 
   return (

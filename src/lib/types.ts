@@ -25,3 +25,13 @@ export interface QuestionData {
   incorrectAnswers: string[];
   tags: string[];
 }
+
+export interface Quiz {
+  id: string,
+  questions: Question[]
+}
+
+export interface QuizSaveState extends Quiz {
+  current: number,
+  answers: string[]
+}

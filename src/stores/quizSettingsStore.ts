@@ -9,15 +9,19 @@ export interface QuizSettings {
 }
 
 interface Action {
-    changeLimit: (newLimit: number) => void,
-    updateCategories: (newCategory: string) => void,
-    updateTypes: (newType: QuestionType) => void,
-    updateDifficulties: (newDifficulty: Difficulty) => void,
+  changeLimit: (newLimit: number) => void;
+  updateCategories: (newCategory: string) => void;
+  updateTypes: (newType: QuestionType) => void;
+  updateDifficulties: (newDifficulty: Difficulty) => void;
 }
 
 function updateSettingsArray<T>(previousArray: T[], newValue: T) {
   if (newValue === "") return ["" as T];
-  const newArray = previousArray.includes(newValue) ? previousArray.filter(value => value !== newValue) : previousArray[0] === "" ? [newValue] : [...previousArray, newValue];
+  const newArray = previousArray.includes(newValue)
+    ? previousArray.filter((value) => value !== newValue)
+    : previousArray[0] === ""
+    ? [newValue]
+    : [...previousArray, newValue];
   return newArray;
 }
 

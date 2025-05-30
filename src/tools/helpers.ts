@@ -10,6 +10,18 @@ export function createSearchParams(limit: number = 10, categories?: string[], di
   return params.toString();
 }
 
+export function extractFilterParams(params: URLSearchParams){
+  const filterParamsNames = ['limit', 'categories', 'difficulties', 'types'];
+  const filterParams = new URLSearchParams();
+
+  filterParamsNames.forEach(paramName => {
+    if(params.has(paramName)) filterParams.set(paramName, params.get(paramName)!);
+  })
+
+  return filterParams;
+
+}
+
 export function extractQuestion(questionDataObject: QuestionData): Question {
   return {
     text: questionDataObject.question.text,
@@ -17,4 +29,18 @@ export function extractQuestion(questionDataObject: QuestionData): Question {
     correctAnswer: questionDataObject.correctAnswer,
     incorrectAnswers: questionDataObject.incorrectAnswers,
   };
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function shuffleArray(array: Array<any>) {
+   const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+}
+
+export function generateQuizUUID() {
+  return crypto.randomUUID();
 }
