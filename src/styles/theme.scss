@@ -8,6 +8,11 @@
   --color-accent: #5C6BC0;           /* Dark Accent */
   --color-border: #1C1F2B;           /* Dark Border */
   --color-hover: #3E4C5E;            /* Dark Hover */
+  --color-hover-background: #2A3242; 
+  --color-hover-border: #3B4252;     /* Lighter than --color-border */
+  --color-active-background: #394150;/* Darker than hover, but not as dark as surface */
+  --color-active-border: #4B5563;    /* Slightly more prominent than hover border */
+
   --color-success: #4C6B5C;          /* Dark Success */
   --color-warning: #A68A4C;          /* Dark Warning */
   --color-error: #A65C6B;            /* Dark Error */
@@ -25,6 +30,9 @@
   --color-accent: #5C6BC0;           /* Light Accent */
   --color-border: #D8DEE9;           /* Light Border */
   --color-hover: #E5E9F0;            /* Light Hover */
+  --color-hover-border: #E2E8F0;     /* Lighter than --color-border */
+  --color-active-background: #DDE3EC; /* Slightly darker than hover background */
+  --color-active-border: #BFC8D9;     /* Slightly stronger than hover border */
   --color-success: #A3BE8C;          /* Light Success */
   --color-warning: #EBCB8B;          /* Light Warning */
   --color-error: #BF616A;            /* Light Error */

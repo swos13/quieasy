@@ -62,7 +62,7 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
   }, [loadFromStorage, quizId]);
 
   useEffect(() => {
-      saveQuiz();
+      if(isNew) saveQuiz();
   }, [])
 
   return (
@@ -72,7 +72,7 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
       ) : (
         <>
           <Question {...currentQuestion.question} />
-          <Button className={styles.next_button} onClick={handleNextQuestion}>
+          <Button className={styles.next_button} variant="outlined" onClick={handleNextQuestion}>
             Next
           </Button>
         </>

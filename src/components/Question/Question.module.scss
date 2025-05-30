@@ -1,7 +1,37 @@
-.category {
-  text-align: center;
-}
+.question {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  .category {
+    text-align: center;
+  }
 
-.text {
-  text-align: center;
+  .text {
+    text-align: center;
+  }
+
+  .answers_wrapper {
+    width: 600px;
+    height: 450px;
+
+    .answer {
+      border: 1px solid var(--color-border);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+        &:hover {
+            background-color: var(--color-hover-background);
+            border-color: var(--color-hover-border);
+        }
+
+        &.selected {
+            background-color: var(--color-active-background);
+            border-color: var(--color-active-border);
+        }
+
+    }
+  }
 }
