@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Button, CircularProgress } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { CircularProgress } from "@mui/material";
 import { Question as IQuestion, QuizSaveState } from "@/lib/types";
 import Question from "../Question/Question";
 import styles from "./QuestionsWrapper.module.scss";
 import { loadQuizSession, saveQuizSession } from "@/tools/storage";
-import { useRouter } from "next/navigation";
+import { useQuizAnswersStore } from "@/stores/quizAnswersStore";
+import NextButton from "../NextButton/NextButton";
 
 interface IQuestionsWrapper {
   questions: IQuestion[];
@@ -20,17 +22,16 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
   const [currentQuestion, setCurrentQuestion] = useState({ number: 0, question: questions[0] });
   const [loading, setLoading] = useState<boolean>(loadFromStorage);
   const [isNewQuiz, setIsNewQuiz] = useState<boolean>(isNew);
-  const [answers, setAnswers] = useState<string[]>([]);
   const quizSaveState = useRef<QuizSaveState>(null);
   const router = useRouter();
 
-  const saveQuiz = () => {
+  const saveQuizState = (questionNumber: number, questionAnswers: string[]) => {
     if (!quizId) return;
     const newQuizSaveState = {
       id: quizId,
       questions: quizQuestions,
-      current: currentQuestion.number,
-      answers,
+      current: questionNumber,
+      answers: questionAnswers,
     };
     saveQuizSession(newQuizSaveState);
     quizSaveState.current = newQuizSaveState;
@@ -42,9 +43,15 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
     }
   };
 
-  const handleNextQuestion = () => {
-    saveQuiz();
-    setCurrentQuestion((prev) => ({ number: prev.number + 1, question: quizQuestions[prev.number + 1] }));
+  const handleNext = () => {
+    const { answers, selectedAnswer, addAnswer, setSelectedAnswer } = useQuizAnswersStore.getState();
+    if (selectedAnswer) {
+      saveQuizState(currentQuestion.number + 1, [...answers, selectedAnswer]);
+      addAnswer(selectedAnswer);
+      setSelectedAnswer(null);
+      if (currentQuestion.number + 1 === questions.length) router.push(`/quiz/${quizId}/summary`);
+      else setCurrentQuestion((prev) => ({ number: prev.number + 1, question: quizQuestions[prev.number + 1] }));
+    }
   };
 
   useEffect(() => {
@@ -52,6 +59,8 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
     else if (loadFromStorage) {
       const loadedQuiz: QuizSaveState = loadQuizSession(quizId);
       if (!loadedQuiz) router.push("/");
+
+      const { setAnswers } = useQuizAnswersStore.getState();
 
       setQuizQuestions(loadedQuiz.questions);
       setCurrentQuestion({ number: loadedQuiz.current, question: loadedQuiz.questions[loadedQuiz.current] });
@@ -62,8 +71,8 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
   }, [loadFromStorage, quizId]);
 
   useEffect(() => {
-      if(isNew) saveQuiz();
-  }, [])
+    if (isNew) saveQuizState(0, []);
+  }, []);
 
   return (
     <div className={styles.question_wrapper}>
@@ -71,10 +80,11 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
         <CircularProgress />
       ) : (
         <>
+          <span className={styles.number}>
+            Question {currentQuestion.number + 1} of {questions.length}
+          </span>
           <Question {...currentQuestion.question} />
-          <Button className={styles.next_button} variant="outlined" onClick={handleNextQuestion}>
-            Next
-          </Button>
+          <NextButton isLast={currentQuestion.number === questions.length - 1} handleClick={handleNext} />
         </>
       )}
     </div>

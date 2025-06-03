@@ -1,0 +1,11 @@
+.next_button {
+  border-radius: 8px;
+  width: 180px;
+  height: 60px;
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: none;
+  }
+}
