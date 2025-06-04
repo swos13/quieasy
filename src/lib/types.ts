@@ -35,3 +35,9 @@ export interface QuizSaveState extends Quiz {
   current: number,
   answers: string[]
 }
+
+export interface QuizSummary {
+  id: string,
+  questions: Question[],
+  answers: string[]
+}

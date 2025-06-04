@@ -13,7 +13,7 @@ import NextButton from "../NextButton/NextButton";
 interface IQuestionsWrapper {
   questions: IQuestion[];
   loadFromStorage: boolean;
-  quizId?: string | null;
+  quizId: string;
   isNew: boolean;
 }
 
@@ -44,8 +44,9 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
   };
 
   const handleNext = () => {
-    const { answers, selectedAnswer, addAnswer, setSelectedAnswer } = useQuizAnswersStore.getState();
+    const { answers, selectedAnswer, addAnswer, setSelectedAnswer, quizId: stateQuizId, setQuizId } = useQuizAnswersStore.getState();
     if (selectedAnswer) {
+      if(stateQuizId !== quizId ) setQuizId(quizId);
       saveQuizState(currentQuestion.number + 1, [...answers, selectedAnswer]);
       addAnswer(selectedAnswer);
       setSelectedAnswer(null);

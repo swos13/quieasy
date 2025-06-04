@@ -2,12 +2,14 @@ import { Question } from "@/lib/types";
 import { create } from "zustand";
 
 export interface QuizAnswers {
+  quizId: string | null;
   selectedAnswer: string | null;
   answers: string[];
   questions: Question[];
 }
 
 interface Action {
+  setQuizId: (newQuizId: string) => void;
   setSelectedAnswer: (newSelectedAnswer: string | null) => void;
   setAnswers: (newAnswers: string[]) => void;
   addAnswer: (newAnswer: string) => void;
@@ -15,10 +17,12 @@ interface Action {
 }
 
 export const useQuizAnswersStore = create<QuizAnswers & Action>((set) => ({
+  quizId: null,
   selectedAnswer: null,
   answers: [],
   questions: [],
 
+  setQuizId: (newQuizId: string) => set(() => ({ quizId: newQuizId })),
   setSelectedAnswer: (newSelectedAnswer: string | null) => set(() => ({ selectedAnswer: newSelectedAnswer })),
   setAnswers: (newAnswers: string[]) => set(() => ({ answers: newAnswers })),
   addAnswer: (newAnswer: string) =>

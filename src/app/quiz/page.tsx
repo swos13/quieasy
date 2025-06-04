@@ -12,11 +12,14 @@ export default async function Quiz({ searchParams }: QuizProps) {
 
   let loadFromStorage = false;
   const isNew = params.get("isNew") === "true";
-  const quizId = params.get("quizId")
+  const quizId = params.get("quizId");
 
   if (!isNew) {
     loadFromStorage = true;
   }
+
+  //TODO: throw 404 error and handle it
+  if(!quizId) throw new Error();
 
   const questions = await getQuestions(extractFilterParams(params).toString());
 
