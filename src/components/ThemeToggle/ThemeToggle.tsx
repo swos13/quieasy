@@ -6,12 +6,14 @@ import { useEffect } from "react";
 
 import { useThemeMode } from "@/context/ThemeContext";
 import styles from './ThemeToggle.module.scss';
+import { saveTheme } from "@/tools/storage";
 
 export default function ThemeToggle() {
   const { toggleTheme, mode } = useThemeMode();
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', mode);
+    saveTheme(mode);
   }, [mode])
 
   return (

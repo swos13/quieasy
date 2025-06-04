@@ -1,3 +1,5 @@
+export type ThemeMode = "light" | "dark";
+
 export type Question = {
   category: string;
   text: string;
