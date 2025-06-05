@@ -7,7 +7,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useQuizSettingsStore } from "@/stores/quizSettingsStore";
 import CategoriesChips from "./components/ChipsOption/CategoriesChips";
-import TypesChips from "./components/ChipsOption/TypesChips";
+// import TypesChips from "./components/ChipsOption/TypesChips";
 import DifficultyChips from "./components/ChipsOption/DifficultyChips";
 import LimitSelection from "./components/LimitSelection";
 
@@ -28,7 +28,7 @@ export default function QuizSettings() {
     <div className={styles.container}>
       <LimitSelection />
       <CategoriesChips />
-      <TypesChips />
+      {/* <TypesChips /> */}
       <DifficultyChips />
       <Button
         className={styles.button}

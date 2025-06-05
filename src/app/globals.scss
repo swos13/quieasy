@@ -19,6 +19,8 @@ body {
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   color: $color-text-primary;
   background: $color-background;
   -webkit-font-smoothing: antialiased;

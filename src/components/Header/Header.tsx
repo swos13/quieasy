@@ -17,6 +17,7 @@ export default function Header() {
   return (
     <Box className={styles.header} component="header">
       {mode === "dark" ? <LogoDark className={styles.logo} onClick={handleLogoClick} /> : <LogoLight className={styles.logo} onClick={handleLogoClick} />}
+      <h2>Quieasy</h2>
       <ThemeToggle />
     </Box>
   );

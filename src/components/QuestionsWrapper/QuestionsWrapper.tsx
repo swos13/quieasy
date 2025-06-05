@@ -81,9 +81,9 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
         <CircularProgress />
       ) : (
         <>
-          <span className={styles.number}>
+          <h2 className={styles.number}>
             Question {currentQuestion.number + 1} of {questions.length}
-          </span>
+          </h2>
           <Question {...currentQuestion.question} />
           <NextButton isLast={currentQuestion.number === questions.length - 1} handleClick={handleNext} />
         </>

@@ -9,9 +9,8 @@
   .option {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    min-width: 320px;
-    width: 30%;
+    gap: 16px;
+    width: 180px;
 
     .option_label {
       width: 100%;
@@ -22,6 +21,7 @@
     }
 
     .option_select {
+    width: 180px;
       border: 1px solid var(--color-border);
       color: var(--color-text-primary);
       border-radius: 10px;

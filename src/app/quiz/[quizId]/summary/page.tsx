@@ -32,7 +32,7 @@ export default function Summary() {
 
   return (
     <div className={styles.summary_wrapper}>
-      <Typography variant="h1">Summary:</Typography>
+      <Typography variant="h4">Summary:</Typography>
       <div className={styles.summary_content}>{urlQuizId === quizId ? <SummaryAnswers summary={summary} /> : <CircularProgress />}</div>
     </div>
   );

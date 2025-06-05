@@ -23,7 +23,7 @@ const Chips = ({ options, selectedOptions, toggleOption }: IChips) => {
           className={styles.chip}
           key={option.value}
           label={option.name}
-          color="info"
+          color="primary"
           variant={selectedOptions.includes(option.value) ? "filled" : "outlined"}
           onClick={() => toggleOption(option.value)}
         />

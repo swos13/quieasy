@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createContext, ReactNode, useContext, useLayoutEffect, useMemo, useState } from "react";
@@ -16,13 +16,13 @@ interface IThemeContext {
 const ThemeContext = createContext<IThemeContext | undefined>(undefined);
 
 export const useThemeMode = () => {
-    const context = useContext(ThemeContext);
-    if (!context) throw new Error('useThemeMode must be used withing ThemeContextProvider');
-    return context;
-}
+  const context = useContext(ThemeContext);
+  if (!context) throw new Error("useThemeMode must be used withing ThemeContextProvider");
+  return context;
+};
 
 export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
-  const [mode, setMode] = useState<ThemeMode>('dark');
+  const [mode, setMode] = useState<ThemeMode>("dark");
 
   const toggleTheme = () => {
     setMode((prev) => (prev === "dark" ? "light" : "dark"));
@@ -34,8 +34,8 @@ export const ThemeContextProvider = ({ children }: { children: ReactNode }) => {
 
   useLayoutEffect(() => {
     const loadedTheme = loadTheme();
-    if(loadedTheme) setMode(loadedTheme);
-  }, [])
+    if (loadedTheme) setMode(loadedTheme);
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme, setTheme }}>
