@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
     });
     return config;
   },
-  output: 'export',
   assetPrefix: isGithubPages ? `/${repoName}/` : "",
   basePath: isGithubPages ? `/${repoName}` : "",
   trailingSlash: true,
