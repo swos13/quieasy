@@ -14,13 +14,18 @@ interface Action {
   setAnswers: (newAnswers: string[]) => void;
   addAnswer: (newAnswer: string) => void;
   setQuestions: (newQuestions: Question[]) => void;
+  reset: () => void;
 }
 
-export const useQuizAnswersStore = create<QuizAnswers & Action>((set) => ({
+const initialState = {
   quizId: null,
   selectedAnswer: null,
   answers: [],
   questions: [],
+}
+
+export const useQuizAnswersStore = create<QuizAnswers & Action>((set) => ({
+  ...initialState,
 
   setQuizId: (newQuizId: string) => set(() => ({ quizId: newQuizId })),
   setSelectedAnswer: (newSelectedAnswer: string | null) => set(() => ({ selectedAnswer: newSelectedAnswer })),
@@ -31,4 +36,5 @@ export const useQuizAnswersStore = create<QuizAnswers & Action>((set) => ({
       return { answers: newAnswers };
     }),
   setQuestions: (newQuestions: Question[]) => set(() => ({ questions: newQuestions })),
+  reset: () => set(initialState)
 }));

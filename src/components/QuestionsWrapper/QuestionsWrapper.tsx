@@ -24,6 +24,7 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
   const [isNewQuiz, setIsNewQuiz] = useState<boolean>(isNew);
   const quizSaveState = useRef<QuizSaveState>(null);
   const router = useRouter();
+  const setQuestions = useQuizAnswersStore((state) => state.setQuestions);
 
   const saveQuizState = (questionNumber: number, questionAnswers: string[]) => {
     if (!quizId) return;
@@ -46,7 +47,7 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
   const handleNext = () => {
     const { answers, selectedAnswer, addAnswer, setSelectedAnswer, quizId: stateQuizId, setQuizId } = useQuizAnswersStore.getState();
     if (selectedAnswer) {
-      if(stateQuizId !== quizId ) setQuizId(quizId);
+      if (stateQuizId !== quizId) setQuizId(quizId);
       saveQuizState(currentQuestion.number + 1, [...answers, selectedAnswer]);
       addAnswer(selectedAnswer);
       setSelectedAnswer(null);
@@ -67,12 +68,16 @@ const QuestionsWrapper = ({ questions, loadFromStorage, quizId, isNew }: IQuesti
       setCurrentQuestion({ number: loadedQuiz.current, question: loadedQuiz.questions[loadedQuiz.current] });
       setAnswers(loadedQuiz.answers);
       setLoading(false);
+      setQuestions(loadedQuiz.questions);
       quizSaveState.current = loadedQuiz;
     }
   }, [loadFromStorage, quizId]);
 
   useEffect(() => {
-    if (isNew) saveQuizState(0, []);
+    if (isNew) {
+      saveQuizState(0, []);
+      setQuestions(questions);
+    }
   }, []);
 
   return (

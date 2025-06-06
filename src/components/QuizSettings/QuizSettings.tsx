@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createSearchParams, generateQuizUUID } from "../../tools/helpers";
 import styles from "./QuizSettings.module.scss";
 import { Button, CircularProgress } from "@mui/material";
@@ -10,10 +10,13 @@ import CategoriesChips from "./components/ChipsOption/CategoriesChips";
 // import TypesChips from "./components/ChipsOption/TypesChips";
 import DifficultyChips from "./components/ChipsOption/DifficultyChips";
 import LimitSelection from "./components/LimitSelection";
+import { useQuizAnswersStore } from "@/stores/quizAnswersStore";
 
 export default function QuizSettings() {
   const router = useRouter();
   const [isStarting, setIsStarting] = useState<boolean>();
+  const reset = useQuizAnswersStore((state) => state.reset);
+
 
   const handleStart = () => {
     setIsStarting(true);
@@ -23,6 +26,8 @@ export default function QuizSettings() {
     const quizId = generateQuizUUID();
     router.push(`./quiz?${searchQueryParams}&quizId=${quizId}&isNew=true`);
   };
+
+  useEffect(() => reset(), [])
 
   return (
     <div className={styles.container}>

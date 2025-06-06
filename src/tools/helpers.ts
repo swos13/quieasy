@@ -1,4 +1,4 @@
-import { Difficulty, Question, QuestionData, QuestionType } from "@/lib/types";
+import { Difficulty, Question, QuestionData, QuestionType, QuizSummary } from "@/lib/types";
 
 export function createSearchParams(limit: number = 10, categories?: string[], difficulties?: Difficulty[], types?: QuestionType[]) {
   const params = new URLSearchParams();
@@ -43,4 +43,8 @@ export function shuffleArray(array: Array<any>) {
 
 export function generateQuizUUID() {
   return crypto.randomUUID();
+}
+
+export function countCorrectAnswers(summary: QuizSummary) {
+  return summary.questions.reduce((sum, question, index) => sum += question.correctAnswer === summary.answers[index] ? 1 : 0, 0)
 }

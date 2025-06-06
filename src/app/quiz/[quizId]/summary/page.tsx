@@ -1,12 +1,12 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import SummaryAnswers from "@/components/SummaryAnswers/SummaryAnswers";
 import { QuizSummary } from "@/lib/types";
 import { useQuizAnswersStore } from "@/stores/quizAnswersStore";
-import { CircularProgress, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import styles from "./summary.module.scss";
 
 export default function Summary() {
@@ -16,8 +16,10 @@ export default function Summary() {
   const answers = useQuizAnswersStore((state) => state.answers);
   const questions = useQuizAnswersStore((state) => state.questions);
   const [summary, setSummary] = useState<QuizSummary>({ id: urlQuizId[0], answers, questions });
-
+  const router = useRouter();
   console.log(urlQuizId, quizId);
+
+  const handleGoToMenu = () => router.push("/");
 
   useEffect(() => {
     if (urlQuizId !== quizId) {
@@ -31,9 +33,10 @@ export default function Summary() {
 
 
   return (
-    <div className={styles.summary_wrapper}>
+    <section className={styles.summary_wrapper}>
       <Typography variant="h4">Summary:</Typography>
       <div className={styles.summary_content}>{urlQuizId === quizId ? <SummaryAnswers summary={summary} /> : <CircularProgress />}</div>
-    </div>
+      <Button variant="contained" onClick={handleGoToMenu}>Back to menu</Button>
+    </section>
   );
 }

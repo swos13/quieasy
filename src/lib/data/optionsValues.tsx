@@ -1,6 +1,6 @@
 import { Difficulty, QuestionType } from "@/lib/types";
 
-export const limits = [10, 20, 30];
+export const limits = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 
 export const categories = [
   { value: "", name: "Any category (mix)" },
