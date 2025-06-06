@@ -23,7 +23,9 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeContextProvider>
             <Header />
+            <main>
             {children}
+            </main>
           </ThemeContextProvider>
         </AppRouterCacheProvider>
       </body>

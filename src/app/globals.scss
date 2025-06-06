@@ -19,6 +19,7 @@ body {
 }
 
 body {
+  position: relative;
   display: flex;
   flex-direction: column;
   color: $color-text-primary;
@@ -42,4 +43,14 @@ a {
   html {
     color-scheme: dark;
   }
+}
+
+main {
+  flex: 1;
+  position: relative;
+  z-index: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
 }
