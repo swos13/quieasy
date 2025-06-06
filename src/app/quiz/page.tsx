@@ -3,7 +3,7 @@ import { getQuestions } from "@/tools/api";
 import { extractFilterParams } from "@/tools/helpers";
 
 interface QuizProps {
-  searchParams: URLSearchParams;
+  searchParams: Promise<URLSearchParams>;
 }
 
 export default async function Quiz({ searchParams }: QuizProps) {
