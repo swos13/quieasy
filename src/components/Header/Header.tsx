@@ -1,6 +1,5 @@
 "use client";
 
-import { Box } from "@mui/material";
 import styles from "./Header.module.scss";
 import { useThemeMode } from "@/context/ThemeContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
@@ -15,10 +14,18 @@ export default function Header() {
   const handleLogoClick = () => router.push("/");
 
   return (
-    <Box className={styles.header} component="header">
-      {mode === "dark" ? <LogoDark className={styles.logo} onClick={handleLogoClick} /> : <LogoLight className={styles.logo} onClick={handleLogoClick} />}
+    <header className={styles.header}>
+      <div className={styles.wrapper}>
+        {mode === "dark" ? (
+          <LogoDark className={styles.logo} onClick={handleLogoClick} />
+        ) : (
+          <LogoLight className={styles.logo} onClick={handleLogoClick} />
+        )}
+      </div>
       <h2>Quieasy</h2>
-      <ThemeToggle />
-    </Box>
+      <div className={styles.wrapper}>
+        <ThemeToggle />
+      </div>
+    </header>
   );
 }

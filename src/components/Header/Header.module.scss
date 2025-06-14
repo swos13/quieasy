@@ -21,4 +21,15 @@
     user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
   }
+
+  .wrapper {
+    width: 40px;
+      display: flex;
+      align-self: center;
+
+    &:last-of-type {
+      justify-content: end;
+    }
+  }
+
 }
