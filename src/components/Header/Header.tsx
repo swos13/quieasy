@@ -1,6 +1,5 @@
 "use client";
 
-import { Box } from "@mui/material";
 import styles from "./Header.module.scss";
 import { useThemeMode } from "@/context/ThemeContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
@@ -16,7 +15,7 @@ export default function Header() {
   const handleLogoClick = () => router.push("/");
 
   return (
-    <Box className={styles.header} component="header">
+    <header className={styles.header}>
       <Image
         className={styles.logo}
         src={mode === "dark" ? logoDark : logoLight}
@@ -29,6 +28,6 @@ export default function Header() {
       <div className={styles.menu}>
         <ThemeToggle />
       </div>
-    </Box>
+    </header>
   );
 }

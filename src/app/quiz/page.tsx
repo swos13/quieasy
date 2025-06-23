@@ -1,6 +1,7 @@
 import QuestionsWrapper from "@/components/QuestionsWrapper/QuestionsWrapper";
 import { getQuestions } from "@/tools/api";
 import { extractFilterParams } from "@/tools/helpers";
+import styles from "./quiz.module.scss";
 
 interface QuizProps {
   searchParams: Promise<URLSearchParams>;
@@ -19,9 +20,13 @@ export default async function Quiz({ searchParams }: QuizProps) {
   }
 
   //TODO: throw 404 error and handle it
-  if(!quizId) throw new Error();
+  if (!quizId) throw new Error();
 
   const questions = await getQuestions(extractFilterParams(params).toString());
 
-  return <QuestionsWrapper questions={questions} loadFromStorage={loadFromStorage} quizId={quizId} isNew={isNew} />;
+  return (
+    <section className={styles.page}>
+      <QuestionsWrapper questions={questions} loadFromStorage={loadFromStorage} quizId={quizId} isNew={isNew} />
+    </section>
+  );
 }
