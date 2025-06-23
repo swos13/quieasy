@@ -1,4 +1,4 @@
-@import '../styles/theme.scss';
+@import "../styles/theme.scss";
 
 :root {
   --background: #ffffff;
@@ -26,6 +26,7 @@ body {
   background: $color-background;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-gutter: stable;
 }
 
 * {
