@@ -1,5 +1,5 @@
 import QuizSettings from "@/components/QuizSettings/QuizSettings";
-import styles from "./page.module.scss";
+import styles from "./home.module.scss";
 
 export default function Home() {
   return (

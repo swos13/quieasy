@@ -1,12 +1,12 @@
 "use client";
 
-import { Box } from "@mui/material";
 import styles from "./Header.module.scss";
 import { useThemeMode } from "@/context/ThemeContext";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
-import LogoDark from "@/assets/logo-dark-theme.svg";
-import LogoLight from "@/assets/logo-light-theme.svg";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import logoDark from "@/assets/logo-dark.png";
+import logoLight from "@/assets/logo-light.png";
 
 export default function Header() {
   const { mode } = useThemeMode();
@@ -15,10 +15,19 @@ export default function Header() {
   const handleLogoClick = () => router.push("/");
 
   return (
-    <Box className={styles.header} component="header">
-      {mode === "dark" ? <LogoDark className={styles.logo} onClick={handleLogoClick} /> : <LogoLight className={styles.logo} onClick={handleLogoClick} />}
-      <h2>Quieasy</h2>
-      <ThemeToggle />
-    </Box>
+    <header className={styles.header}>
+      <Image
+        className={styles.logo}
+        src={mode === "dark" ? logoDark : logoLight}
+        width={42}
+        height={42}
+        onClick={handleLogoClick}
+        alt="logo"
+      />
+      <h2 className={styles.name}>Quieasy</h2>
+      <div className={styles.menu}>
+        <ThemeToggle />
+      </div>
+    </header>
   );
 }
