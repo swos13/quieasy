@@ -32,6 +32,11 @@ export interface Quiz {
   id: string,
   questions: Question[]
 }
+export interface DailyQuiz {
+  id: string,
+  questions: Question[],
+  date: string
+}
 
 export interface QuizSaveState extends Quiz {
   current: number,
