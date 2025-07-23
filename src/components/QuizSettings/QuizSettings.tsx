@@ -30,7 +30,7 @@ export default function QuizSettings() {
   useEffect(() => reset(), [])
 
   useEffect(() => {
-    fetch("api/daily-quiz").then((res) => res.json()).then(data => console.log(data));
+    fetch("/api/daily-quiz").then((res) => res.json()).then(data => console.log(data));
   }, [])
 
   return (
