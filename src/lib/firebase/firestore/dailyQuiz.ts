@@ -1,8 +1,8 @@
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../config";
 import { getQuestions } from "@/lib/api";
 import { DailyQuiz } from "@/lib/types";
-import { generateQuizUUID, isValidDateFormat } from "@/tools/helpers";
+import { isValidDateFormat } from "@/tools/helpers";
 
 const DAILY_QUIZZES_COLLECTION = "daily_quizzes";
 
@@ -31,9 +31,10 @@ export async function createDailyQuiz() {
   try {
     const newQuestions = await getQuestions(20);
     const date = new Date().toLocaleDateString("en-US");
-    const newDailyQuiz: DailyQuiz = { id: generateQuizUUID(), questions: newQuestions, date };
-    const quizRef = await addDoc(collection(db, DAILY_QUIZZES_COLLECTION), newDailyQuiz);
-    return (await getDoc(quizRef)).data();
+    const newDailyQuiz: DailyQuiz = { questions: newQuestions  };
+    const docRef = doc(db, DAILY_QUIZZES_COLLECTION, date);
+    await setDoc(docRef, newDailyQuiz);
+    return (await getDoc(docRef)).data();
   } catch (error) {
     console.error("Error adding document: ", error);
   }
