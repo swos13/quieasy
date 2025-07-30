@@ -48,3 +48,8 @@ export function generateQuizUUID() {
 export function countCorrectAnswers(summary: QuizSummary) {
   return summary.questions.reduce((sum, question, index) => sum += question.correctAnswer === summary.answers[index] ? 1 : 0, 0)
 }
+
+export function isValidDateFormat(date: string) {
+  const regex = /^(0[1-9]|1[0-2])\/(0[1-9]|[12][0-9]|3[01])\/\d{4}$/;
+  return regex.test(date);
+}

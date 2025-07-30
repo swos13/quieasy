@@ -1,5 +1,5 @@
 import QuestionsWrapper from "@/components/QuestionsWrapper/QuestionsWrapper";
-import { getQuestions } from "@/tools/api";
+import { getQuestionsBySearchQuery } from "@/lib/api";
 import { extractFilterParams } from "@/tools/helpers";
 import styles from "./quiz.module.scss";
 
@@ -22,7 +22,7 @@ export default async function Quiz({ searchParams }: QuizProps) {
   //TODO: throw 404 error and handle it
   if (!quizId) throw new Error();
 
-  const questions = await getQuestions(extractFilterParams(params).toString());
+  const questions = await getQuestionsBySearchQuery(extractFilterParams(params).toString());
 
   return (
     <section className={styles.page}>

@@ -1,5 +1,5 @@
-import { QuestionData } from "@/lib/types";
-import { extractQuestion } from "./helpers";
+import { Difficulty, QuestionData, QuestionType } from "@/lib/types";
+import { createSearchParams, extractQuestion } from "../tools/helpers";
 
 export const fetchData = async (paramsString: string = "limit=10") => {
   try {
@@ -17,8 +17,14 @@ export const fetchData = async (paramsString: string = "limit=10") => {
   }
 };
 
-export async function getQuestions(searchQuery: string) {
+export async function getQuestionsBySearchQuery(searchQuery: string) {
   const questions = await fetchData(searchQuery);
+
+  return questions.map((question: QuestionData) => extractQuestion(question));;
+}
+
+export async function getQuestions(limit: number = 10, categories?: string[], difficulties?: Difficulty[], types?: QuestionType[]) {
+  const questions = await fetchData(createSearchParams(limit, categories, difficulties, types).toString());
 
   return questions.map((question: QuestionData) => extractQuestion(question));;
 }
