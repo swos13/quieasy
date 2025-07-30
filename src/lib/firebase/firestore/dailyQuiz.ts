@@ -7,7 +7,7 @@ import { generateQuizUUID, isValidDateFormat } from "@/tools/helpers";
 const DAILY_QUIZZES_COLLECTION = "daily_quizzes";
 
 //TODO: do logic for today's daily quiz
-export async function getTodayDailyQuiz() {
+export async function getTodaysDailyQuiz() {
   try {
     const today = new Date().toLocaleDateString("en-US");
     const docRef = doc(db, DAILY_QUIZZES_COLLECTION, today);
